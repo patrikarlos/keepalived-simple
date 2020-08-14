@@ -36,6 +36,6 @@ GPL-2.0-or-later
 Author Information
 ------------------
 
-Sven Velt <sven-ansiblerole@velt.biz>
-https://git.velt.biz/velt.biz/
+- Sven Velt <sven-ansiblerole@velt.biz>
+- https://git.velt.biz/velt.biz/
 
