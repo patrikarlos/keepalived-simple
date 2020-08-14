@@ -1,0 +1,25 @@
+---
+- name: Install keepalived
+  package:
+    name: keepalived
+    state: latest
+  notify: Restart keepalived
+
+
+- name: Enable keepalive
+  service:
+    name: keepalived
+    enabled: yes
+
+
+- name: Template configuration keepalived.conf
+  template:
+    src: keepalived.conf
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: 0640
+    backup: yes
+  notify: Restart keepalived
+
+
