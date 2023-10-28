@@ -30,6 +30,22 @@ Dependencies
 
 Example Playbook
 ----------------
+(inventory:
+...
+keepers:
+  hosts:
+    n1:
+      keepalived_state: MASTER
+      keepalived_prio: 255
+    n2:
+      keepalived_state: BACKUP
+      keepalived_prio: 250
+    n3:
+      keepalived_state: BACKUP
+      keepalived_prio: 245
+      keepalived_interface: eno1
+....
+)
 
     - hosts: keepalived-servers
       roles:
