@@ -5,6 +5,38 @@
     state: latest
   notify: Restart keepalived
 
+#- name: Identify nic
+
+- name: Allow ESP on Multicast 224.0.0.18
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: 51
+    destination: 224.0.0.18
+    jump: ACCEPT
+  become: yes
+
+- name: Allow ICMP
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: 1
+    jump: ACCEPT
+  become: yes
+
+
+- name: Allow VRRP on Multicast 224.0.0.18
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: 112
+    destination: 224.0.0.18
+    jump: ACCEPT
+  become: yes
+
+
+## Strongly inspired by maas_firewall/tasks/setup_firewall_rules.yaml
+- name: Save iptables rules
+  ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
+  changed_when: false
+  
 
 - name: Enable keepalive
   service:
