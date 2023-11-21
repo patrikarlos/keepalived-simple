@@ -36,17 +36,31 @@
 - name: Save iptables rules
   ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
   changed_when: false
-  
+
+- name: Create /etc/keepalived/conf.d if needed
+  ansible.builtin.file:
+    path: /etc/keepalived/conf.d
+    state: directory
+    mode: '0744'
 
 - name: Enable keepalive
   service:
     name: keepalived
     enabled: yes
 
+- name: Template instance configuration conf.d/{{ keepalived_instance_name }}.conf
+  template:
+    src: keepalived_instance.conf
+    dest: "/etc/keepalived/conf.d/{{ keepalived_instance_name }}.conf"
+    owner: root
+    group: root
+    mode: 0640
+    backup: yes
+
 
 - name: Template configuration keepalived.conf
   template:
-    src: keepalived.conf
+    src: keepalived_global.conf
     dest: /etc/keepalived/keepalived.conf
     owner: root
     group: root
